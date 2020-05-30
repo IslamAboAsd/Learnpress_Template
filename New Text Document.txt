@@ -1,0 +1,94 @@
+# LearnpressArabicTemplate
+Template for learnpress wordpress plugin
+you will need to add this code to you function.php file
+you can replace "theme name" with your theme name if you want
+
+/*function code */
+
+
+function themeName_course_settings_meta_box_args($args){
+  $args['fields'][] = array(
+    'name'   => esc_html__('Skill level', 'themeName'),
+    'id'    => "_course_skill_level",
+    'type' => 'select',
+    'options' => array(
+      'beginner'      => esc_html__('Beginner', 'themeName'),
+      'intermediate'  => esc_html__('Intermediate', 'themeName'),
+      'advanced'      => esc_html__('Advanced', 'themeName'),
+    ),
+  );
+//   $args['fields'][] = array(
+//     'name'   => esc_html__('Certificate', 'themeName'),
+//     'id'    => "_course_certificate",
+//     'type' => 'select',
+//     'options' => array(
+//       ''        => esc_html__('--None--', 'themeName'),
+//       'no'      => esc_html__('No', 'themeName'),
+//       'yes'     => esc_html__('Yes', 'themeName'),
+//     ),
+//     'default'   => 'yes'
+//   );
+  $args['fields'][] = array (
+    'name'  => esc_html__('صفحة الكورسات ', 'themeName'),
+    'id'    => "_course_includes",
+    'type'  => 'wysiwyg',
+    'clone' => true,
+    'std'   => '',
+    'placeholder' => ''
+  );
+  $args['fields'][] = array (
+    'name'  => esc_html__('بيانات الكورس', 'themeName'),
+    'id'    => "_course_will_learn",
+    'type'  => 'wysiwyg',
+    'clone' => true,
+    'std'   => '',
+    'placeholder' => 'بيانات الكورس تظهر فى صفحة الكورس'
+  );
+  
+//   $args['fields'][] = array (
+//     'name'  => esc_html__('Course Video', 'themeName'),
+//     'id'    => "_course_video",
+//     'type'  => 'text',
+//     'std'   => '',
+//   );
+//   $args['fields'][] = array (
+//     'name'  => esc_html__('Course Gallery', 'themeName'),
+//     'id'    => "_course_gallery",
+//     'type'  => 'image_advanced',
+//     'std'   => '',
+//   );
+
+  return $args;
+}
+ add_filter( 'learn_press_course_settings_meta_box_args', 'themeName_course_settings_meta_box_args' , 99 );
+
+
+function themeName_widgets_init() {
+  register_sidebar( array(
+        'name' => esc_html__( 'Course Sidebar', 'themeName' ),
+        'id' => 'course_sidebar',
+        'description' => esc_html__( 'Appears in the Course sidebar section of the site.', 'themeName' ),
+        'before_widget' => '<aside id="%1$s" class="widget clearfix %2$s">',
+        'after_widget' => '</aside>',
+        'before_title' => '<h3 class="widget-title"><span>',
+        'after_title' => '</span></h3>',
+    ) );
+
+}
+add_action( 'widgets_init', 'themeName_widgets_init' );
+
+/*add bootstrap css && bootstrap js files 
+you need to upload theme
+
+*/
+
+
+function tootaya_init_scripts(){
+ 
+ if(is_single() ){ 
+  //bootstrap
+    wp_enqueue_script('bootstrap', get_stylesheet_directory_uri().'/js/bootstrap.js', array('jquery') );
+  //scrollbar
+  wp_enqueue_style('bootstrap', get_stylesheet_directory_uri(). '/css/bootstrap.css', array(), '1.0.5' , 'all'); 
+}
+}
